@@ -1,0 +1,32 @@
+{% extends './layout.html' %}
+
+{% block title %} Captura banco {% endblock %}
+
+{% block css%} <link rel="stylesheet" href="{{ url_for('static',filename='css/admin.css') }}"> {% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg  pl-5 pr-5">
+    <div class="container-fluid">
+            <span class="titulo">Captura banco</span>
+            <div> 
+                <span class="usuario">Usuario:<strong> {{data.usuario}}</strong> </span>
+                <a href="/salir"><span class="btn btn-danger ml-3 "> Cerrar sesion</span></a>
+            </div>
+    </div>
+</nav>
+<div class="contendor_formulario">
+    <form action="" method="POST">
+        <h4>Ingresé el archivo</h4>
+        <input class="form-control" type="file" required name="documento">
+        <h4>Ingresé en que ID comenzará a guardar</h4>
+        <input class= "form-control"type="number" required placeholder="Ingrese en que ID comenzará a subir los datos" name="id_num">
+        <h4>Ingresé la fecha en que se actualizó por ultima vez el documento</h4>
+        <input class="form-control" type="date" required name="fecha_ult">
+        <button class="btn btn-danger submit" type="submit">Subir</button>
+
+
+    </form>
+</div>
+{% endblock %}
+
+{% block js%} {% endblock %}

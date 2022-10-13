@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/plantilla_uno.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <title>Dashboard</title>
+</head>
+<body>
+     <nav class="navbar navbar-expand-lg  pl-5 pr-5">
+    <div class="container-fluid">
+            <span class="titulo">Dashboard </span>
+            <span class=" ">Usuario:<strong> {{data.usuario}}</strong>
+                <a href="/salir"><span class="btn btn-danger ml-3 "> Cerrar sesion</span></a>
+            </span>
+    </div>
+</nav>
+<h1>Dashboard</h1>
+<div class="contenedor">
+<h3>Totales por dia de la semana</h3>
+<div class="layout-tabla">
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Día</th>
+                <th>{{vendedora.0}}</th>
+                <th>{{vendedora.1}}</th>
+                <th>{{vendedora.2}}</th>
+                <th>{{vendedora.3}}</th>
+                <th>{{vendedora.4}}</th>
+                <th>{{vendedora.5}}</th>
+                <th>{{vendedora.6}}</th>
+                <th>{{vendedora.7}}</th>
+                <th>{{vendedora.8}}</th>
+                <th>{{vendedora.9}}</th>
+                <th>{{vendedora.10}}</th>
+                <th>{{vendedora.11}}</th>
+                <th>{{vendedora.12}}</th>
+                <th>{{vendedora.13}}</th>
+                <th>{{vendedora.14}}</th>
+                <th>{{vendedora.15}}</th>
+                <th>{{vendedora.16}}</th>
+                <th>{{vendedora.17}}</th>
+                <th>{{vendedora.18}}</th>
+                <th>{{vendedora.19}}</th>
+                <th>{{vendedora.20}}</th>
+                <th>{{vendedora.21}}</th>
+                <th>{{vendedora.22}}</th>
+                
+ 
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for fila in datos %}
+            <tr>
+                <td >{{fila.0}}</td>
+                <td >{{fila.1}}</td>
+                <td >{{fila.2}}</td>
+                <td >{{fila.3}}</td>
+                <td >{{fila.4}}</td>
+                <td >{{fila.5}}</td>
+                <td >{{fila.6}}</td>
+                <td >{{fila.7}}</td>
+                <td >{{fila.8}}</td>
+                <td >{{fila.9}}</td>
+                <td >{{fila.10}}</td>
+                <td >{{fila.11}}</td>
+                <td >{{fila.12}}</td>
+                <td >{{fila.13}}</td>
+                <td >{{fila.14}}</td>
+                <td >{{fila.15}}</td>
+                <td >{{fila.16}}</td>
+                <td >{{fila.17}}</td>
+                <td >{{fila.18}}</td>
+                <td >{{fila.19}}</td>
+                <td >{{fila.20}}</td>
+                <td >{{fila.21}}</td>
+                <td >{{fila.22}}</td>
+                
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+<div class="contenedor">
+<div class="tabla_total_semanal">
+    <section>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="renglon_tabla_semanal">Vendedora</th>
+                <th class="renglon_tabla_semanal">Totales</th>
+                
+ 
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for elemento in tabla_totales_semana%}
+            <tr>
+            
+            
+            <td class="renglon_tabla_semanal">{{elemento.0}}</td>
+            <td class="renglon_tabla_semanal">{{elemento.1}}</td>
+
+            </tr>
+            
+            {% endfor%}
+
+
+            
+            
+            <!-- {% for total in totales_vendedora%}
+            <tr>
+                <td >{{total}}</td>
+
+            </tr>
+            {% endfor%} -->
+        </tbody>
+    </table>
+
+</div> 
+
+    <figure>
+        <h3>Efectividad de registros</h3>
+    <canvas id="myChart"></canvas>
+    </figure>
+        <script>
+            let ctx = document.getElementById("myChart").getContext('2d');
+            let myChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                
+                labels: {{vendedora |safe}},
+                datasets: [{
+                label: 'Depurados',
+                data: {{values_grafica.0 | safe}},
+                backgroundColor: "rgb(240,48,17)",
+                borderColor: "#A8A8A8",
+
+            borderWidth: 1
+        },{
+                label: 'llamadas',
+                data: {{values_grafica.1 | safe}},
+                backgroundColor: "rgb(38,241,56)",
+                borderColor: "#196F15",
+
+        }
+    ],   
+    },
+    options: {
+        responsive: false,
+       
+    }
+});
+     </script>
+</section>
+</div>
+
+<!--------------------------------------------------------------------------------------------------->
+<div class="contenedor_graficas">
+    <figure>
+        <h3>Efectividad de registros</h3>
+    <canvas id="Chart_totales_semana"></canvas>
+    </figure>
+    <script>
+        let grafica = document.getElementById("Chart_totales_semana").getContext('2d');
+        let Chart_totales_semana = new Chart(grafica, {
+        type: "line",
+        data: {
+            
+            labels: {{dias |safe}},
+            datasets: [{
+            label: '{{vendedora.0}}',
+            data: {{grafica_totales_por_semana.0 | safe}},
+            backgroundColor: "rgb(240,48,17)",
+            borderColor: "#FF4B36",
+
+    },{
+            label: '{{vendedora.1}}',
+            data: {{grafica_totales_por_semana.1 | safe}},
+            backgroundColor: "rgb(38,241,56)",
+            borderColor: "#50D828",
+
+    },{
+            label: '{{vendedora.2}}',
+            data: {{grafica_totales_por_semana.2 | safe}},
+            backgroundColor: "rgb(52,148,249)",
+            borderColor: "#537AD5",
+
+    },{
+            label: '{{vendedora.3}}',
+            data: {{grafica_totales_por_semana.3 | safe}},
+            backgroundColor: "rgb(255,217,6)",
+            borderColor: "#F3E858",
+
+    },{
+            label: '{{vendedora.4}}',
+            data: {{grafica_totales_por_semana.4 | safe}},
+            backgroundColor: "rgb(255,144,33)",
+            borderColor: "#FFAE5D",
+
+    },{
+            label: '{{vendedora.5}}',
+            data: {{grafica_totales_por_semana.5 | safe}},
+            backgroundColor: "rgb(70,246,185)",
+            borderColor: "#2CAA7E",
+
+    },{
+            label: '{{vendedora.6}}',
+            data: {{grafica_totales_por_semana.6 | safe}},
+            backgroundColor: "rgb(51,213,227)",
+            borderColor: "#24A4AF",
+
+    },{
+            label: '{{vendedora.7}}',
+            data: {{grafica_totales_por_semana.7 | safe}},
+            backgroundColor: "rgb(71,158,255)",
+            borderColor: "#00B9FF",
+
+    },{
+            label: '{{vendedora.8}}',
+            data: {{grafica_totales_por_semana.8 | safe}},
+            backgroundColor: "rgb(255,92,159)",
+            borderColor: "#C91F64",
+
+    },{
+            label: '{{vendedora.9}}',
+            data: {{grafica_totales_por_semana.9 | safe}},
+            backgroundColor: "rgb(255,178,255)",
+            borderColor: "#FF7EFF",
+
+    },{
+            label: '{{vendedora.10}}',
+            data: {{grafica_totales_por_semana.10 | safe}},
+            backgroundColor: "rgb(205,170,255)",
+            borderColor: "#BD90FF",
+
+    },{
+            label: '{{vendedora.11}}',
+            data: {{grafica_totales_por_semana.11 | safe}},
+            backgroundColor: "rgb(150,255,93)",
+            borderColor: "#63F216",
+
+    },{
+            label: '{{vendedora.12}}',
+            data: {{grafica_totales_por_semana.12 | safe}},
+            backgroundColor: "rgb(159,216,255)",
+            borderColor: "#77D2FF",
+
+    },{
+            label: '{{vendedora.13}}',
+            data: {{grafica_totales_por_semana.13 | safe}},
+            backgroundColor: "rgb(46,255,252)",
+            borderColor: "#05E1DE",
+
+    },{
+            label: '{{vendedora.14}}',
+            data: {{grafica_totales_por_semana.14 | safe}},
+            backgroundColor: "rgb(56,190,255)",
+            borderColor: "#0598E1",
+
+    },{
+            label: '{{vendedora.15}}',
+            data: {{grafica_totales_por_semana.15 | safe}},
+            backgroundColor: "rgb(119,255,185)",
+            borderColor: "#54FF9F",
+
+    },{
+            label: '{{vendedora.16}}',
+            data: {{grafica_totales_por_semana.16 | safe}},
+            backgroundColor: "rgb(255,207,9)",
+            borderColor: "#FFD839",
+
+    },{
+            label: '{{vendedora.17}}',
+            data: {{grafica_totales_por_semana.17 | safe}},
+            backgroundColor: "rgb(245,111,48)",
+            borderColor: "#FF5C10",
+
+    },{
+            label: '{{vendedora.18}}',
+            data: {{grafica_totales_por_semana.18 | safe}},
+            backgroundColor: "rgb(255,87,81)",
+            borderColor: "#E74944",
+
+    },{
+            label: '{{vendedora.19}}',
+            data: {{grafica_totales_por_semana.19 | safe}},
+            backgroundColor: "rgb(95,115,229)",
+            borderColor: "#334EE3",
+
+    },{
+            label: '{{vendedora.20}}',
+            data: {{grafica_totales_por_semana.20 | safe}},
+            backgroundColor: "rgb(144,33,255)",
+            borderColor: "#7E1EDE",
+
+    }],       
+    },
+    options: {
+        responsive: false,
+        plugins: { 
+            legend: {position: 'right'}
+        }
+
+    }
+    });
+    </script>
+
+<!----------------------------------------------------------------------------------------------------------------->
+
+
+<figure>
+    
+<canvas id="ChartDoughnut"></canvas>
+</figure>
+    <script>
+        let grafica_2 = document.getElementById("ChartDoughnut").getContext('2d');
+        let ChartDoughnut = new Chart(grafica_2, {
+        type: "doughnut",
+        data: {
+            
+            labels: {{grafica_dona.0 |safe}},
+            datasets: [{
+            label: 'Grupos',
+            data: {{grafica_dona.1 | safe}},
+            backgroundColor: ["rgba(240,48,17,0.2)","rgba(255,87,81,0.2)","rgba(38,241,56,0.2)","rgba(255,178,255,0.2)"],
+            borderColor: ["rgba(240,48,17,1)","rgba(255,87,81,1)","rgba(38,241,56,1)","rgba(255,178,255,1)"]
+    },
+],   
+},
+options: {
+    responsive: false
+}
+
+   
+
+});
+ </script>
+
+</div> 
+
+<figure>
+    
+    <canvas id="Chartseguimiento"></canvas>
+    </figure>
+        <script>
+            let grafica_3 = document.getElementById("Chartseguimiento").getContext('2d');
+            let Chartseguimiento = new Chart(grafica_3, {
+            type: "bar",
+            data: {
+                
+                labels: {{grafica_seguimiento.0 |safe}},
+                datasets: [{
+                label: 'Seguimiento',
+                data: {{grafica_seguimiento.1 | safe}},
+                backgroundColor: ["rgba(240,48,17,0.2)","rgba(255,87,81,0.2)","rgba(38,241,56,0.2)","rgba(255,178,255,0.2)"],
+                borderColor: ["rgba(240,48,17,1)","rgba(255,87,81,1)","rgba(38,241,56,1)","rgba(255,178,255,1)"]
+        },
+    ],   
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: false
+    }
+    
+       
+    
+    });
+     </script>
+</body>
+
+</html>
+
+
+
+
+
+

@@ -1,0 +1,270 @@
+{% extends './layout.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block css%} <link rel="stylesheet" href="{{ url_for('static',filename='css/dashboard.css') }}"> {% endblock %}
+
+{% block body %}
+{%block library%}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+{%endblock%}
+<nav class="navbar navbar-expand-lg  pl-5 pr-5">
+    <div class="container-fluid">
+            <span class="titulo">Dashboard </span>
+            <span class=" ">Usuario:<strong> {{data.usuario}}</strong>
+                <a href="/salir"><span class="btn btn-danger ml-3 "> Cerrar sesion</span></a>
+            </span>
+    </div>
+</nav>
+
+<div class="contenedor_exterior">
+    <h3>Totales por dia de la semana</h3>
+    <div class="layout-tabla">
+        
+        <table class="table">
+            
+            <thead>
+                <tr>
+                    <th>Día</th>
+                    {%for element in vendedora%} <!--Coloca una columna por cada vendedora -->
+                    <th>{{element}}</th>
+
+                    {%endfor%}
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for fila in datos %} <!--Doble ciclo for que nos ayuda a iterar  cada fila de datos y a su vez de cada fila analizar cada columna-->
+                <tr>
+                    {%for columna in fila%}
+                    <td >{{columna}}</td>
+                    {% endfor%}
+          
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+</div>
+</div>
+<div class="contenedor_exterior">
+    
+    <div class="contenedor_interior_1">
+        <h3>Totales ventas por semana</h3>
+        
+        <table class="table">
+            
+            
+            <thead>
+                
+                <tr>
+                    <th class="renglon_tabla_semanal">Vendedora</th>
+                    <th class="renglon_tabla_semanal">Totales</th>
+
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for elemento in tabla_totales_semana%}
+                <tr>
+                
+                
+                <td class="renglon_tabla_semanal">{{elemento.0}}</td>
+                <td class="renglon_tabla_semanal">{{elemento.1}}</td>
+    
+                </tr>
+                
+                {% endfor%}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="contenedor_interior_2">
+        <figure>
+            <h3>Efectividad de registros</h3>
+        <canvas id="myChart"></canvas>
+        </figure>
+    </div>
+    <div class="contenedor_interior_3">
+        <figure>
+            <h3>Registro por llamadas</h3>
+            <canvas id="ChartDoughnut"></canvas>
+            </figure>
+    </div>
+</div>
+
+<div class="contenedor_exterior">
+        <div class="contenedor_interior_4">
+                <figure>
+                <h3>Totales por vendedora</h3>
+                <canvas id="Chart_totales_semana"></canvas>
+                </figure>
+
+        </div>
+        <div class="contendor_interior_5">
+            <figure>
+            <h3>Seguimientos</h3>
+            <canvas id="Chartseguimiento"></canvas>
+            </figure>
+              
+
+        </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--SCRIPTS DE LAS GRAFICAS-->
+
+
+
+
+<script>
+    let labl = {{vendedora | safe}}
+    let hola = labl.slice(0,-1)
+    let ctx = document.getElementById("myChart").getContext('2d');
+    let myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        
+        labels: hola,
+        datasets: [{
+        label: 'Depurados',
+        data: {{values_grafica.0 | safe}},
+        backgroundColor: "rgba(77, 135, 161, 0.3)",
+        borderColor: "rgba(77, 135, 161, 1)",
+        borderWidth: 1
+},{
+        label: 'llamadas',
+        data: {{values_grafica.1 | safe}},
+
+        backgroundColor: "rgba(77, 161, 103, 0.3)",
+        borderColor: "rgba(77, 161, 103, 1)",
+        borderWidth: 1
+
+}
+],   
+},
+options: {
+responsive: false,
+
+}
+});
+</script>
+
+<script>
+    let colores_fondo = ["rgba(167, 189, 193, 0.3)","rgba(211, 232, 217, 0.3)","rgba(77, 135, 161, 0.3)","rgba(77, 161, 103, 0.3)","rgba(19, 80, 91, 0.3)","rgba(12, 116, 137,0.3)","rgba(167, 189, 193, 0.3)","rgba(211, 232, 217, 0.3)","rgba(77, 135, 161, 0.3)","rgba(77, 161, 103, 0.3)","rgba(19, 80, 91, 0.3)","rgba(12, 116, 137,0.3)","rgba(167, 189, 193, 0.3)","rgba(211, 232, 217, 0.3)","rgba(77, 135, 161, 0.3)","rgba(77, 161, 103, 0.3)","rgba(19, 80, 91, 0.3)","rgba(12, 116, 137,0.3)","rgba(167, 189, 193, 0.3)","rgba(211, 232, 217, 0.3)","rgba(77, 135, 161, 0.3)","rgba(77, 161, 103, 0.3)","rgba(19, 80, 91, 0.3)","rgba(12, 116, 137,0.3)"]
+    let colores_borde = ["rgba(167, 189, 193, 1)","rgba(211, 232, 217, 1)","rgba(77, 135, 161, 1)","rgba(77, 161, 103, 1)","rgba(19, 80, 91, 1)","rgba(12, 116, 137, 1)","rgba(167, 189, 193, 1)","rgba(211, 232, 217, 1)","rgba(77, 135, 161, 1)","rgba(77, 161, 103, 1)","rgba(19, 80, 91, 1)","rgba(12, 116, 137, 1)","rgba(167, 189, 193, 1)","rgba(211, 232, 217, 1)","rgba(77, 135, 161, 1)","rgba(77, 161, 103, 1)","rgba(19, 80, 91, 1)","rgba(12, 116, 137, 1)","rgba(167, 189, 193, 1)","rgba(211, 232, 217, 1)","rgba(77, 135, 161, 1)","rgba(77, 161, 103, 1)","rgba(19, 80, 91, 1)","rgba(12, 116, 137, 1)"]
+    let grafica = document.getElementById("Chart_totales_semana").getContext('2d');
+    let Chart_totales_semana = new Chart(grafica, {
+    type: "line",
+    data: {
+        labels: {{dias | safe}},
+       
+        
+        datasets: [{
+                label: "Totales",
+                data: {{totales_dia | safe}},
+                backgroundColor: ["rgba(77, 161, 103, 0.3)"],
+                borderColor: ["rgba(77, 161, 103, 1)"],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: false,
+        }
+    });
+
+                
+
+
+
+
+
+let vendedora = {{vendedoras_graficas | safe}};
+let information = {{grafica_totales_por_semana | safe}};
+
+for (element in vendedora){
+        
+        const newDataset = {
+        label: vendedora[element],
+        
+        data: information[element],
+        backgroundColor: colores_fondo[element],
+        borderColor: colores_borde[element]
+        
+        };
+        Chart_totales_semana.data.datasets.push(newDataset);
+        Chart_totales_semana.update();
+
+        }
+
+
+
+</script>
+
+<script>
+    let grafica_2 = document.getElementById("ChartDoughnut").getContext('2d');
+    let ChartDoughnut = new Chart(grafica_2, {
+    type: "doughnut",
+    data: {
+        
+        labels: {{grafica_dona.0 |safe}},
+        datasets: [{
+        label: 'Grupos',
+        data: {{grafica_dona.1 | safe}},
+        backgroundColor: ["rgba(167, 189, 193, 0.3)","rgba(211, 232, 217, 0.3)","rgba(77, 161, 103, 0.3)","rgba(77, 135, 161, 0.3)"],
+        borderColor: ["rgba(167, 189, 193, 1)","rgba(211, 232, 217, 1)","rgba(77, 161, 103, 1)","rgba(77, 135, 161, 1)"]
+},
+],   
+},
+options: {
+responsive: false
+}
+
+
+
+});
+</script>
+
+
+
+
+<script>
+    let grafica_3 = document.getElementById("Chartseguimiento").getContext('2d');
+    let Chartseguimiento = new Chart(grafica_3, {
+    type: "bar",
+    data: {
+        
+        labels: {{grafica_seguimiento.0 |safe}},
+        datasets: [{
+        label: 'Seguimiento',
+        data: {{grafica_seguimiento.1 | safe}},
+        backgroundColor: ["rgba(167, 189, 193, 0.3)","rgba(211, 232, 217, 0.3)","rgba(77, 135, 161, 0.3)","rgba(77, 161, 103, 0.3)","rgba(19, 80, 91, 0.3)","rgba(12, 116, 137,0.3)"],
+        borderColor: ["rgba(167, 189, 193, 1)","rgba(211, 232, 217, 1)","rgba(77, 135, 161, 1)","rgba(77, 161, 103, 1)","rgba(19, 80, 91, 1)","rgba(12, 116, 137, 1)"],
+        borderWidth: 2
+},
+],   
+},
+options: {
+indexAxis: 'y',
+responsive: false
+}
+
+
+
+});
+</script>
+{% endblock %}
+
+{% block js%} {% endblock %}

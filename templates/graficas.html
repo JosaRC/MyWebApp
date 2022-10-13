@@ -1,0 +1,115 @@
+{% extends './layout.html' %}
+
+{% block title %} Admin {% endblock %}
+
+{% block css%} <link rel="stylesheet" href="{{ url_for('static',filename='css/menu-graficas.css') }}"> {% endblock %}
+{%block library%}     <script src="url_for('static',filename='js/bootstrap.min.js')"></script>
+<script src="url_for('static',filename='js/popper.min.js')"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="multiple-select.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/me.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+
+{%endblock%}
+{% block body %}
+
+<nav class="navbar navbar-expand-lg  pl-5 pr-5">
+    <div class="container-fluid">
+            <span class="titulo">Graficas</span>
+            <div> 
+                <span>Usuario:<strong> {{data.usuario}}</strong> </span>
+                <a href="/salir"><span class="btn btn-danger ml-3 "> Cerrar sesion</span></a>
+            </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Generación de graficas</h1>
+    <div class="form-group">
+        
+        <form action="" method="POST" >
+        <h4>Vendedoras</h4>
+        <select name="vendedora" id="ms-vendedoras" multiple="multiple">
+            <option value="A Ale">A Ale</option>
+            <option value="A Eli">A Eli</option>
+            <option value="A Evelyn">A Evelyn</option>
+            <option value="A Fernanda">A Fernanda</option>
+            <option value="C Deyanira">C Deyanira</option>
+            <option value="C Jesus">C Jesus</option>
+            <option value="G Aixa">G Aixa</option>
+            <option value="L Laura">L Laura</option>
+            <option value="L Yanet">L Yanet</option>
+            <option value="M Armando">M Armando</option>
+            <option value="M Gabriel">M Gabriel</option>
+            <option value="M Laura">M Laura</option>
+            <option value="P Angelica">P Angelica</option>
+            <option value="P Erika">P Erika</option>
+            <option value="P Jorge">P Jorge</option>
+            <option value="Q Gis">Q Gis</option>
+            <option value="Q Mary">Q Mary</option>
+            <option value="Q Paulina">Q Paulina</option>
+            <option value="S Arcelia">S Arcelia</option>
+            <option value="S Karina">S Karina</option>
+            <option value="Z Isabel">Z Isabel</option>
+        </select>
+        <h4>Estados</h4>
+        <select name = "estados" id="ms-estados" multiple="multiple">
+            <option value="AGS">AGS</option>
+            <option value="GTO">GTO</option>
+            <option value="JAL">JAL</option>
+            <option value="MEX">MEX</option>
+            <option value="PUE">PUE</option>
+            <option value="Q ROO">Q ROO</option>
+            <option value="QRO">QRO</option>
+            <option value="SLP">SLP</option>
+            <option value="ZAC">ZAC</option>
+        </select>
+        <h4>Fecha inicio</h4>
+        <input name="fechai" class="form-control w-25" type="date">
+        <h4>Fecha final</h4>
+        <input name="fechaf" class="form-control w-25" type="date">
+
+        <button class="btn btn-primary mt-2" type="submit">Buscar</button>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    $(function() {
+        $('#ms-vendedoras').change(function() {
+            console.log($(this).val());
+        }).multipleSelect({
+            multiple: true,
+            width: '25%',
+            multipleWidth: 80,
+            dropWidth: 700,
+            minimumCountSelected: 9
+            
+        });
+
+});
+</script>
+
+<script>
+$(function() {
+    $('#ms-estados').change(function() {
+        console.log($(this).val());
+    }).multipleSelect({
+        multiple: true,
+        width: '25%',
+        multipleWidth: 50,
+        dropWidth: 700,
+        minimumCountSelected: 4
+        
+    });
+
+});
+</script>
+
+{% endblock %}
+
+{% block js%} {% endblock %}

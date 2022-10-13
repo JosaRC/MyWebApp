@@ -1,0 +1,105 @@
+.btn{
+    font-size: x-small;
+    font-weight: 450;
+}
+.titulo{
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(236, 236, 236);
+}
+.navbar{
+    background-color: rgb(37, 37, 37);
+}
+span{
+    color: rgb(236, 236, 236);
+}
+
+h1 {
+	color: rgb(73, 73, 73);
+    font-weight: 700;
+    margin-top: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+h3 {
+	color: rgb(73, 73, 73);
+    font-weight: 900;
+    margin-top: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.contenedor_interior_1{
+    width: 30%;
+    display: inline-block;
+    margin: 15px;
+    padding: 5px;
+    position: relative;
+    top: 5px;
+    left: 20px;
+    text-align: center;
+
+}
+
+
+.contenedor_interior_2{
+    height: 500px;
+    width: 50%;
+    display: inline-flex;
+    margin: 15px;
+    padding: 5px;
+    position: relative;
+    top: 5px;
+    left: 150px;
+    
+}
+
+.contenedor_interior_3{
+    height: 500px;
+    width: 50%;
+    display: inline-flex;
+    margin: 15px;
+    padding: 5px;
+    position: absolute;
+    top: 925px;
+    left: 50%;
+    
+    
+}
+.contenedor_interior_4{
+    height: 700px;
+    width: 800px;
+    display: inline-flex;
+    margin-left: 15px;
+    margin: 5px;
+    padding: 5px;
+    position: relative;
+
+}
+.contenedor_interior_5{
+    height: 750px;
+    width: 800px;
+    display: inline-flex;
+    margin-left: 15px;
+    margin: 5px;
+    padding: 5px;
+    position: absolute;
+
+}
+#myChart{
+    height: 500px;
+    width: 700px;
+}
+#ChartDoughnut{
+    height: 500px;
+    width: 500px;
+
+}
+#Chart_totales_semana{
+    height: 500;
+    width: 800px;
+}
+#Chartseguimiento{
+    height: 700px;
+    width: 700px;
+
+}
